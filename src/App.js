@@ -122,7 +122,7 @@ function App() {
               <Box key={idx}>
                 {item}
               </Box>)}
-            <Heading as='h3' size='md' py={4}>Total HP: {totalHp}</Heading>
+            <Heading as='h3' size='sm' py={4}>Total HP: {totalHp}</Heading>
           </Box>
         </GridItem>
         <GridItem colSpan={4}>
