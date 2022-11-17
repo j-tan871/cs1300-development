@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { Heading, ChakraProvider, Grid, GridItem, SimpleGrid, Box, Center, Text } from '@chakra-ui/react';
 
 import PokemonCard from './components/PokemonCard';
 import Sidebar from './components/Sidebar';
-import { BsFileDiff } from 'react-icons/bs';
 
 function App() {
   const [favorites, setFavorites] = useState([]);
@@ -78,7 +77,7 @@ function App() {
 
   const filteredData = data.filter(matchesFilterType);
   const selectSortType = (sort) => {
-    
+
     if (sort === 'Name') {
       setSortName(!sortName);
     } else {
@@ -93,7 +92,7 @@ function App() {
       if (diff === 0) {
         return a.total - b.total;
       }
-      
+
       return diff;
     } else if (sortName) {
       return a.name.localeCompare(b.name);
@@ -107,25 +106,34 @@ function App() {
   return (
     <ChakraProvider>
       <Center>
-      <Heading as='h1' size='4xl' py={4}>Pokedex</Heading>
+        <Heading as='h1' size='4xl' py={4}>Pokedex</Heading>
       </Center>
 
       <Grid templateColumns='repeat(5, 1fr)' templateRows='repeat(1, 1fr)' px={5}>
         <GridItem colSpan={1}>
+          <Heading as='h2' size='md' py={4}>Sort and Filter</Heading>
           <Sidebar
             onSelect={selectFilterType}
             onSelectSort={selectSortType}
           />
+          <Box>
+            <Heading as='h2' size='md' py={4}>Favorites</Heading>
+            {favorites.map((item, idx) =>
+              <Box key={idx}>
+                {item}
+              </Box>)}
+            <Heading as='h3' size='md' py={4}>Total HP: {totalHp}</Heading>
+          </Box>
         </GridItem>
         <GridItem colSpan={4}>
           <Center>
             <SimpleGrid
-              columns={[2, null, 2, null, 4]} 
+              columns={[2, null, 2, null, 4]}
               spacing={4}
             >
               {sortedData.map((item, idx) =>
                 <Box key={idx}>
-                  <PokemonCard 
+                  <PokemonCard
                     name={item.name}
                     type1={item.type1}
                     type2={item.type2}
@@ -138,13 +146,6 @@ function App() {
           </Center>
         </GridItem>
       </Grid>
-      <Box>
-        {favorites.map((item, idx) => 
-        <Box key={idx}>
-          {item}
-        </Box>)}
-        <Text>Total: {totalHp}</Text>
-      </Box>
     </ChakraProvider>
   );
 }
